@@ -237,7 +237,7 @@ if __name__ == '__main__':
         context = mx.cpu()
     bert_embedding = BertEmbedding(ctx=context, model=args.model, dataset_name=args.dataset_name,
                                    max_seq_length=args.max_seq_length, batch_size=args.batch_size)
-    result = []
+    result = None
     sents = []
     if args.sentences:
         sents = args.sentences
@@ -252,6 +252,6 @@ if __name__ == '__main__':
 
     if result:
         for sent, embeddings in zip(sents, result):
-            print('Text: {}'.format(sent))
+            logger.info('Text: %s', sent)
             _, tokens_embedding = embeddings
-            print('Tokens embedding: {}'.format(tokens_embedding))
+            logger.info('Tokens embedding: %s', tokens_embedding)
