@@ -57,17 +57,24 @@ def test_bert_embedding_data_loader_works_with_uncased_data():
 @pytest.mark.remote_required
 @pytest.mark.gpu
 def test_bert_embedding():
+    # Test command line interface.
+    # Sentences are passed through arguments.
     process = subprocess.check_call(['python', './scripts/bert/embedding.py', '--gpu', '0', '--dtype', 'float32',
                                      '--model', 'bert_12_768_12', '--dataset_name', 'book_corpus_wiki_en_uncased',
                                      '--max_seq_length', '25', '--batch_size', '256',
                                      '--oov_way', 'avg', '--sentences', '"is this jacksonville ?"'])
     time.sleep(5)
+    # Sentences are read from file.
+    process = subprocess.check_call(['python', './scripts/bert/embedding.py', '--gpu', '0', '--dtype', 'float32',
+                                     '--model', 'bert_12_768_12', '--dataset_name', 'book_corpus_wiki_en_uncased',
+                                     '--max_seq_length', '25', '--batch_size', '256',
+                                     '--oov_way', 'avg', '--file', './scripts/tests/bert/sentences.txt', '--verbose'])
+    time.sleep(5)
+    # Load params.
     process = subprocess.check_call(['python', './scripts/bert/embedding.py', '--gpu', '0', '--dtype', 'float32',
                                      '--model', 'bert_12_768_12', '--dataset_name', 'book_corpus_wiki_en_uncased',
                                      '--max_seq_length', '25', '--batch_size', '256',
                                      '--params_path',
                                      '~/.mxnet/models/bert_12_768_12_book_corpus_wiki_en_uncased-75cc780f.params',
                                      '--oov_way', 'avg', '--sentences', '"is this jacksonville ?"', '--verbose'])
-
-
     time.sleep(5)
